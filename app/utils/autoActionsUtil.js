@@ -12,6 +12,7 @@ import {
   convertRangeToSeconds,
 } from "./commonUtil";
 import { writeToLog } from "./logUtil";
+import { sendNotificationToUser } from "./notificationUtil";
 import { loadFilter } from "./userExternalUtil";
 import { updateUserCredits } from "./userUtil";
 
@@ -50,6 +51,9 @@ export const stopBotIfRequired = (buyerSetting) => {
     writeToLog(`Autobuyer stopped | ${message}`, idProgressAutobuyer);
     stopAfter = null;
     pauseCycle = null;
+
+    buyerSetting["idNotificationType"] === "A" &&
+      sendNotificationToUser(`Autobuyer Stopped - ${message}`);
     stopAutoBuyer();
   }
 };
